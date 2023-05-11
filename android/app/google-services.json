@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "987328309283",
+    "project_id": "wissal-ff41e",
+    "storage_bucket": "wissal-ff41e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987328309283:android:c4839f5881e353cfaf2996",
+        "android_client_info": {
+          "package_name": "com.example.wissal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987328309283-ecr90lijmu6umqnif6f4pfnoia62s757.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFAmgUSBUi5FmC6NLKMNgLFpRmNyslBDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987328309283-ecr90lijmu6umqnif6f4pfnoia62s757.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
