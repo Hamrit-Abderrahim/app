@@ -9,8 +9,6 @@ class RegisterView extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    bool isPassword = true;
-
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -53,37 +51,6 @@ class RegisterView extends StatelessWidget {
                       return null;
                     },
                   ),
-                  //!------ password--------
-                  // StatefulBuilder(
-                  //   builder: (BuildContext context, setState) {
-
-                  //     return TextFormField(
-                  //       controller: confpasswordController,
-                  //       decoration: const InputDecoration(
-                  //           labelText: 'Confirm Password'),
-                  //       obscureText: true,
-                  //       suffixIcon: IconButton(
-                  //           onPressed: () {
-                  //             setState(() {
-                  //               isPassword = !isPassword;
-                  //               print('isPassword=$isPassword');
-                  //             });
-                  //           },
-                  //           icon: isPassword == true
-                  //               ? const Icon(Icons.visibility)
-                  //               : const Icon(Icons.visibility_off)),
-                  //       validator: (String? value) {
-                  //         if (value!.isEmpty) {
-                  //           return 'Please Enter Your password';
-                  //         } else if (passwordController.text !=
-                  //             confpasswordController.text) {
-                  //           return 'confirm password not correcte';
-                  //         }
-                  //         return null;
-                  //       },
-                  //     );
-                  //   },
-                  // ),
                   TextFormField(
                     controller: confpasswordController,
                     decoration:

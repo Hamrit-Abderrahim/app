@@ -2,10 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wissal/core/network/cach_helper.dart';
 import 'package:wissal/features/view/home/home_view.dart';
 
-import '../../../../user_model.dart';
+import '../../../models/user_model.dart';
 
+// ignore: must_be_immutable
 class PersonalInfoView extends StatefulWidget {
   PersonalInfoView({super.key, required this.email, required this.password});
   late String email;
@@ -215,13 +217,6 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                   Center(
                     child: ElevatedButton(
                       onPressed: () {
-                        print(nameController.text);
-                        print(ageController.text);
-                        print(sex);
-                        print(skinColor);
-                        print(skinType);
-                        print(widget.email);
-                        print(widget.password);
                         if (formKey.currentState!.validate()) {
                           registerUser(
                               email: widget.email,
@@ -234,7 +229,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const HomeVew()),
+                                builder: (context) => const MyHomePage()),
                           );
                         }
                       },
@@ -272,8 +267,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
           gender: gender,
           skinType: skinType,
           skinColor: skinColor);
-      // addFirebase(
-      //     email: email, name: name, userID: value.user!.uid, phone: phone);
+      CacheHelper.saveData(key: 'token', value: value.user!.uid);
     }).catchError((error) {
       if (kDebugMode) {
         print(error.toString());

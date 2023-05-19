@@ -1,8 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:wissal/core/function/function.dart';
+import 'package:wissal/core/network/cach_helper.dart';
 import 'package:wissal/features/view/home/home_view.dart';
 
+import '../../../models/user_model.dart';
 import '../register/register_view.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final formKey = GlobalKey<FormState>();
 
   bool isLoading = false;
+  //?------------ login ------------------
+  UserModel? user;
 
   logIngUser({
     required String email,
@@ -33,13 +38,12 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
+        CacheHelper.saveData(key: 'token', value: value.user!.uid);
         setState(() {
           isLoading = false;
         });
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeVew()),
-        );
+        print(value);
+        navigateAndReplace(context, const MyHomePage());
       });
     } on FirebaseAuthException catch (e) {
       if (kDebugMode) {
