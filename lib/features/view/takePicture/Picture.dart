@@ -66,7 +66,7 @@ class _PicturePageState extends State<PicturePage> {
       http.StreamedResponse res = await req.send();
       setState(() async {
         responseString = await res.stream.transform(utf8.decoder).join();
-        print(responseString);
+        print("responseString=== $responseString");
       });
 
       // ignore: use_build_context_synchronously
