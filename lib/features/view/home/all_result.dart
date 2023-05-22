@@ -31,7 +31,8 @@ class _AllResultState extends State<AllResult> {
           listener: (context, state) {},
           builder: (context, state) {
             return ConditionalBuilder(
-              condition: state is! GetAllResultLaodingState,
+              condition:
+                  BlocProvider.of<AppCubitCubit>(context).result.isNotEmpty,
               builder: (context) => ListView.separated(
                 itemCount:
                     BlocProvider.of<AppCubitCubit>(context).result.length,
@@ -43,7 +44,7 @@ class _AllResultState extends State<AllResult> {
                 separatorBuilder: (context, index) => const Divider(),
               ),
               fallback: (context) => const Center(
-                child: CircularProgressIndicator(),
+                child: Text('NO Result'),
               ),
             );
           },

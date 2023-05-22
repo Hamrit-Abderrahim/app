@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:wissal/core/network/cach_helper.dart';
 import 'package:wissal/features/view/home/home_view.dart';
 
+import '../../../../core/utils/contstants.dart';
 import '../../../models/user_model.dart';
 
 // ignore: must_be_immutable
@@ -226,11 +227,6 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                               gender: sex,
                               skinType: skinType,
                               skinColor: skinColor);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const MyHomePage()),
-                          );
                         }
                       },
                       style: ButtonStyle(
@@ -267,7 +263,13 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
           gender: gender,
           skinType: skinType,
           skinColor: skinColor);
-      CacheHelper.saveData(key: 'token', value: value.user!.uid);
+      CacheHelper.saveData(key: 'token', value: value.user!.uid).then((value) {
+        uId = CacheHelper.getData(key: 'token');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MyHomePage()),
+        );
+      });
     }).catchError((error) {
       if (kDebugMode) {
         print(error.toString());

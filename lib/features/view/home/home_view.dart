@@ -6,6 +6,7 @@ import 'package:wissal/features/models/user_model.dart';
 import 'package:wissal/features/view/home/all_result.dart';
 import 'package:wissal/features/view/home/widget/log_out_dialog.dart';
 
+import '../../../core/network/cach_helper.dart';
 import '../../../core/utils/contstants.dart';
 import '../takePicture/Picture.dart';
 
@@ -33,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         model = UserModel.fromJson(value.data()!);
       });
-      print("user===========${model!.skinColor}");
+      print("user===========${model!.email}");
     }).catchError((error) {
       print(error.toString());
     });
@@ -41,12 +42,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    super.initState();
     getMe();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    uId = CacheHelper.getData(key: 'token');
+    print("homeUID======$uId");
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {

@@ -11,7 +11,6 @@ import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await CacheHelper.init();
   uId = CacheHelper.getData(key: 'token');
   print('token main =$uId');

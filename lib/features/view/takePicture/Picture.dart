@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -63,9 +64,10 @@ class _PicturePageState extends State<PicturePage> {
       req.files.add(await http.MultipartFile.fromPath('image', path));
 
       http.StreamedResponse res = await req.send();
-
-      responseString = await res.stream.transform(utf8.decoder).join();
-      print(responseString);
+      setState(() async {
+        responseString = await res.stream.transform(utf8.decoder).join();
+        print(responseString);
+      });
 
       // ignore: use_build_context_synchronously
       // Navigator.push(
@@ -74,7 +76,9 @@ class _PicturePageState extends State<PicturePage> {
       //       builder: (context) => CancerDiagnosis(result: responseString)),
       // );
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
       rethrow;
     }
   }
