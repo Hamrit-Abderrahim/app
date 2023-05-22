@@ -1,7 +1,11 @@
 import 'dart:io';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:wissal/features/controller/app_cubit/app_cubit_cubit.dart';
+import 'package:wissal/features/controller/app_cubit/app_cubit_state.dart';
 import 'dart:convert' show utf8;
 import '../result/result.dart';
 
@@ -9,7 +13,8 @@ import '../result/result.dart';
 const String url = "http://192.168.100.13:5000";
 
 class PicturePage extends StatefulWidget {
-  const PicturePage({super.key});
+  final String typeBody;
+  const PicturePage({super.key, required this.typeBody});
 
   @override
   State<PicturePage> createState() => _PicturePageState();
@@ -50,6 +55,7 @@ class _PicturePageState extends State<PicturePage> {
     });
   }
 
+  String responseString = '';
   Future<void> sendImage(String path) async {
     try {
       http.MultipartRequest req =
@@ -58,14 +64,15 @@ class _PicturePageState extends State<PicturePage> {
 
       http.StreamedResponse res = await req.send();
 
-      String responseString = await res.stream.transform(utf8.decoder).join();
+      responseString = await res.stream.transform(utf8.decoder).join();
       print(responseString);
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => CancerDiagnosis(result: responseString)),
-      );
+      // ignore: use_build_context_synchronously
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => CancerDiagnosis(result: responseString)),
+      // );
     } catch (e) {
       print(e);
       rethrow;
@@ -74,6 +81,7 @@ class _PicturePageState extends State<PicturePage> {
 
   @override
   Widget build(BuildContext context) {
+    print("asdadada= ${widget.typeBody}");
     return Scaffold(
         appBar: AppBar(
           title: const Text("Take Photo"),
@@ -106,22 +114,47 @@ class _PicturePageState extends State<PicturePage> {
                   ],
                 ),
                 const SizedBox(height: 20),
-                ElevatedButton(
-                    onPressed: _image == null
-                        ? null
-                        : () async {
-                            if (_image != null) {
-                              await sendImage(_image!.path);
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const AlertDialog(
-                                        title: Text("You must take an image"));
-                                  });
-                            }
-                          },
-                    child: const Text('predict'))
+                BlocConsumer<AppCubitCubit, AppCubitState>(
+                  listener: (context, state) {
+                    if (state is SaveImageSuccessState) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CancerDiagnosis(
+                                  result: responseString,
+                                  typeBody: widget.typeBody,
+                                )),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    return ConditionalBuilder(
+                      condition: state is! SaveImageLaodingState,
+                      builder: (context) => ElevatedButton(
+                          onPressed: _image == null
+                              ? null
+                              : () async {
+                                  if (_image != null) {
+                                    BlocProvider.of<AppCubitCubit>(context)
+                                        .saveIamge(_image);
+                                    // await sendImage(_image!.path);
+                                  } else {
+                                    showDialog(
+                                        context: context,
+                                        builder: (context) {
+                                          return const AlertDialog(
+                                              title: Text(
+                                                  "You must take an image"));
+                                        });
+                                  }
+                                },
+                          child: const Text('predict')),
+                      fallback: (context) => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  },
+                )
               ],
             ),
             Positioned(
