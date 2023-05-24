@@ -16,10 +16,3 @@ class SaveDataLaodingState extends AppCubitState {}
 class SaveDataSuccessState extends AppCubitState {}
 
 class SaveDataErrorState extends AppCubitState {}
-//? ----- get All Post image -------?
-
-class GetAllResultLaodingState extends AppCubitState {}
-
-class GetAllResultSuccessState extends AppCubitState {}
-
-class GetAllResultErrorState extends AppCubitState {}

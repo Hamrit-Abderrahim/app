@@ -65,25 +65,4 @@ class AppCubitCubit extends Cubit<AppCubitState> {
       emit(SaveDataErrorState());
     });
   }
-
-  //!------ getAllResult ---------
-  List<ResultModel> result = [];
-  Future<void> getAllResult() async {
-    emit(GetAllResultLaodingState());
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(uId)
-        .collection('result')
-        .snapshots()
-        .listen((event) {
-      result = [];
-      for (var element in event.docs) {
-        result.add(ResultModel.fromJson(element.data()));
-        if (kDebugMode) {
-          print("sdffffffff=${result[0]}");
-        }
-        emit(GetAllResultSuccessState());
-      }
-    });
-  }
 }

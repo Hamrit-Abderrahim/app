@@ -1,53 +1,45 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wissal/features/controller/app_cubit/app_cubit_cubit.dart';
-import 'package:wissal/features/controller/app_cubit/app_cubit_state.dart';
 import 'package:wissal/features/models/user_model.dart';
+import 'package:wissal/features/view/home/controller/result_cubit/result_cubit.dart';
+import 'package:wissal/features/view/home/controller/result_cubit/result_state.dart';
 import 'package:wissal/features/view/home/widget/card_comp.dart';
 
-class AllResult extends StatefulWidget {
+class AllResult extends StatelessWidget {
   final UserModel model;
   const AllResult({super.key, required this.model});
 
   @override
-  State<AllResult> createState() => _AllResultState();
-}
-
-class _AllResultState extends State<AllResult> {
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<AppCubitCubit>(context).getAllResult();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("ALL result"),
-        ),
-        body: BlocConsumer<AppCubitCubit, AppCubitState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            return ConditionalBuilder(
-              condition:
-                  BlocProvider.of<AppCubitCubit>(context).result.isNotEmpty,
-              builder: (context) => ListView.separated(
-                itemCount:
-                    BlocProvider.of<AppCubitCubit>(context).result.length,
-                itemBuilder: (conext, index) => CardComponents(
-                  user: widget.model,
-                  result: BlocProvider.of<AppCubitCubit>(context).result,
-                  index: index,
+    return BlocProvider(
+      create: (context) => ResultCubit()..getAllResult(),
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text("ALL result"),
+          ),
+          body: BlocConsumer<ResultCubit, ResultState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return ConditionalBuilder(
+                condition:
+                    BlocProvider.of<ResultCubit>(context).result.isNotEmpty,
+                builder: (context) => ListView.separated(
+                  itemCount:
+                      BlocProvider.of<ResultCubit>(context).result.length,
+                  itemBuilder: (conext, index) => CardComponents(
+                    user: model,
+                    result: BlocProvider.of<ResultCubit>(context).result,
+                    index: index,
+                  ),
+                  separatorBuilder: (context, index) => const Divider(),
                 ),
-                separatorBuilder: (context, index) => const Divider(),
-              ),
-              fallback: (context) => const Center(
-                child: Text('NO Result'),
-              ),
-            );
-          },
-        ));
+                fallback: (context) => const Center(
+                  child: Text('NO Result'),
+                ),
+              );
+            },
+          )),
+    );
   }
 }
