@@ -1,6 +1,7 @@
 class UserModel {
   String? name, gender, skinType, email, uId, password;
-  int? skinColor, age;
+  int? age;
+  int? skinColor;
   UserModel(
       {required this.name,
       required this.email,
@@ -30,7 +31,7 @@ class UserModel {
       'age': age,
       'gender': gender,
       'skinType': skinType,
-      'skinColor  ': skinColor,
+      'skinColor': skinColor,
     };
   }
 }

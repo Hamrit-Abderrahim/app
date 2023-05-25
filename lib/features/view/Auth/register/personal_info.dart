@@ -25,15 +25,13 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
   String sex = "";
 
   String skinType = "";
-
-  int skinColor = 0xFFFFFFFF;
-
-  List<int> skinColors = [
-    0xFFEDD3B3,
-    0xFFE7BB98,
-    0xFFB89166,
-    0xFF8E522F,
-    0xFF523F38
+  Color skinColor = const Color(0x0fffffff);
+  List<Color> skinColors = [
+    const Color(0xFFEDD3B3),
+    const Color(0xFFE7BB98),
+    const Color(0xFFB89166),
+    const Color(0xFF8E522F),
+    const Color(0xFF523F38),
   ];
   final formKey = GlobalKey<FormState>();
 
@@ -201,11 +199,12 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                           onTap: () {
                             setState(() {
                               skinColor = color;
+                              print("aaaaa=$skinColor");
                             });
                           },
                           child: CircleAvatar(
                             radius: 23.0,
-                            backgroundColor: Color(color),
+                            backgroundColor: color,
                             child: skinColor == color
                                 ? const Icon(Icons.check, color: Colors.white)
                                 : null,
@@ -226,7 +225,7 @@ class _PersonalInfoViewState extends State<PersonalInfoView> {
                               age: int.parse(ageController.text),
                               gender: sex,
                               skinType: skinType,
-                              skinColor: skinColor);
+                              skinColor: skinColor.value);
                         }
                       },
                       style: ButtonStyle(

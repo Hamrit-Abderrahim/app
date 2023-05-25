@@ -17,7 +17,8 @@ class HomeCubit extends Cubit<HomeState> {
         .get()
         .then((value) {
       model = UserModel.fromJson(value.data()!);
-      print("user===========${model!.name}");
+      print("user===========${model!.skinColor.toString()}");
+
       emit(GetCurrentUserSuccessState());
     }).catchError((error) {
       print(error.toString());

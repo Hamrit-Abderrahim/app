@@ -128,7 +128,7 @@ class _PicturePageState extends State<PicturePage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => CancerDiagnosis(
-                                  result: 'responseString',
+                                  result: responseString,
                                   typeBody: widget.typeBody,
                                 )),
                       );

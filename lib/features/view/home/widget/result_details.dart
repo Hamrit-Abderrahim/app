@@ -87,13 +87,22 @@ class ResultDetails extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  '${user.skinColor}',
-                  style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red),
+                const SizedBox(
+                  width: 20.0,
                 ),
+                CircleAvatar(
+                  radius: 16.0,
+                  backgroundColor: Color(user.skinColor!),
+                ),
+                // Text(
+                //   '${user.skinColor} ', // White
+
+                //   //"$Color('${user.skinColor}')",
+                //   style: const TextStyle(
+                //       fontSize: 20.0,
+                //       fontWeight: FontWeight.bold,
+                //       color: Colors.red),
+                // ),
               ],
             ),
             const SizedBox(
