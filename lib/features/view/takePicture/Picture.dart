@@ -58,7 +58,6 @@ class _PicturePageState extends State<PicturePage> {
 
   var details = {'Usrname': 'tom', 'Password': 'pass@123'};
 
-  // ignore: prefer_typing_uninitialized_variables
   var responseString;
   Future<void> sendImage(String path) async {
     try {
